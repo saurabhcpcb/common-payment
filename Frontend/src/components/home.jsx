@@ -4,14 +4,14 @@ import sha512 from "js-sha512";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
 
-import {Commonurl} from "./commonurl";
+import { Commonurl } from "./commonurl";
 
 const Home = () => {
   const [showdiv, setShowDiv] = useState("");
 
   const options = [
     { value: "battery", label: "EPR Portal For Battery Waste Management" }
-   
+
   ];
 
   const changeForm = (event) => {
@@ -22,13 +22,13 @@ const Home = () => {
     }
   };
 
-  const [key, setKey] = useState("99sCa8");
+  const [key, setKey] = useState("Ts1FMO");
   const [txnid, setTxnid] = useState("");
   const [amount, setAmount] = useState("");
   const [productinfo, setProduct] = useState("iPhone");
   const [firstname, setfirstname] = useState("");
   const [email, setEmail] = useState("");
-  const [SALT, setSalt] = useState("Q37iqkUXYd9lwrRyEK9KOHVUena3t2Xb");
+  const [SALT, setSalt] = useState("jgHC8u1Y25nJY2C90qnXaepqRDgRY6zT");
   const [hash, sethash] = useState("");
   const [paidamount, setPaidAmount] = useState("");
   const [paymentsatus, setPaymentstatus] = useState("");
@@ -37,13 +37,14 @@ const Home = () => {
   const getData = () => {
     // console.log(email);
     axios
-      .post(Commonurl+"/getuserdata", { email: email })
+      .post(Commonurl+"/getuser", { email: email })
       .then((response) => {
-        if (response.data.length > 0) {
-          setfirstname(response.data.result[0].name);
-          setPaidAmount(response.data.result[0].amount);
+        // console.log('response',response.data.data);return;
+        if (response.data.data != "") {
+          setfirstname(response.data.data.name);
+          setPaidAmount(response.data.data.amount);
           setTxnid("RP_" + Math.floor(10000000 + Math.random() * 90000000));
-          setPaymentstatus(response.data.result[0].status);
+          setPaymentstatus(response.data.data.status);
           setErrormes("");
         } else {
           setErrormes("Transaction Details Not Found!");
@@ -56,6 +57,11 @@ const Home = () => {
       .catch((error) => {
         // this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
+        setErrormes("Transaction Details Not Found!");
+        setfirstname("");
+        setPaidAmount("");
+        setTxnid("RP_" + Math.floor(10000000 + Math.random() * 90000000));
+        setPaymentstatus("");
       });
   };
 
@@ -65,8 +71,8 @@ const Home = () => {
     <>
       <div className="auth-wrapper">
         <div className="auth-inner">
-          <form method="post" action="https://test.payu.in/_payment">
-          {/* <form method="post" action="https://secure.payu.in/_payment"> */}
+          {/* <form method="post" action="https://test.payu.in/_payment"> */}
+            <form method="post" action="https://secure.payu.in/_payment">
             <div className="mb-3 text-center">
               <img
                 alt="not found"
@@ -80,18 +86,19 @@ const Home = () => {
             <div className="hidden_fields">
               <input type="hidden" name="key" value={key} />
               <input type="hidden" name="txnid" value={txnid} />
+              <input type="hidden" name="appname" value="battery" />
               {/* <input type="hidden" name="firstname" value="Ashish" /> */}
               <input type="hidden" name="productinfo" value="iPhone" />
               {/*<input type="hidden" name="lastname" value="Kumar" /> */}
               <input
                 type="hidden"
                 name="surl"
-                value= {Commonurl + "payment"}
+                value={Commonurl+"/payment"}
               />
               <input
                 type="hidden"
                 name="furl"
-                value={Commonurl + "paymentfailed"}
+                value={Commonurl+"/paymentfailed"}
               />
               <input type="hidden" name="hash" value={hash} />
             </div>
@@ -115,18 +122,18 @@ const Home = () => {
                     sethash(
                       sha512(
                         key +
-                          "|" +
-                          txnid +
-                          "|" +
-                          amount +
-                          "|" +
-                          productinfo +
-                          "|" +
-                          firstname +
-                          "|" +
-                          e.target.value +
-                          "|||||||||||" +
-                          SALT
+                        "|" +
+                        txnid +
+                        "|" +
+                        amount +
+                        "|" +
+                        productinfo +
+                        "|" +
+                        firstname +
+                        "|" +
+                        e.target.value +
+                        "|||||||||||" +
+                        SALT
                       )
                     );
                   }}
@@ -157,18 +164,18 @@ const Home = () => {
                     sethash(
                       sha512(
                         key +
-                          "|" +
-                          txnid +
-                          "|" +
-                          amount +
-                          "|" +
-                          productinfo +
-                          "|" +
-                          e.target.value +
-                          "|" +
-                          email +
-                          "|||||||||||" +
-                          SALT
+                        "|" +
+                        txnid +
+                        "|" +
+                        amount +
+                        "|" +
+                        productinfo +
+                        "|" +
+                        e.target.value +
+                        "|" +
+                        email +
+                        "|||||||||||" +
+                        SALT
                       )
                     );
                   }}
@@ -190,18 +197,18 @@ const Home = () => {
                     sethash(
                       sha512(
                         key +
-                          "|" +
-                          e.target.value +
-                          "|" +
-                          amount +
-                          "|" +
-                          productinfo +
-                          "|" +
-                          firstname +
-                          "|" +
-                          email +
-                          "|||||||||||" +
-                          SALT
+                        "|" +
+                        e.target.value +
+                        "|" +
+                        amount +
+                        "|" +
+                        productinfo +
+                        "|" +
+                        firstname +
+                        "|" +
+                        email +
+                        "|||||||||||" +
+                        SALT
                       )
                     );
                   }}
@@ -236,18 +243,18 @@ const Home = () => {
                     sethash(
                       sha512(
                         key +
-                          "|" +
-                          txnid +
-                          "|" +
-                          e.target.value +
-                          "|" +
-                          productinfo +
-                          "|" +
-                          firstname +
-                          "|" +
-                          email +
-                          "|||||||||||" +
-                          SALT
+                        "|" +
+                        txnid +
+                        "|" +
+                        e.target.value +
+                        "|" +
+                        productinfo +
+                        "|" +
+                        firstname +
+                        "|" +
+                        email +
+                        "|||||||||||" +
+                        SALT
                       )
                     );
                   }}
@@ -261,7 +268,7 @@ const Home = () => {
                   name="initiate"
                   value={"Initiate Payment"}
                   className="btn btn-success"
-                  // onClick={submitData}
+                // onClick={submitData}
                 />
               </div>
             </div>

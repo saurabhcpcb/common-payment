@@ -1,0 +1,1 @@
+export const Commonurl = "http://103.7.181.103:8000/api";

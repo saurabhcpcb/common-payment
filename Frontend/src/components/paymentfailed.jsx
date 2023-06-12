@@ -29,7 +29,7 @@ const Payment = () => {
   // if (paymentsatus === "success") {
   //   // console.log("response data");
   setTimeout(function () {
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("http://103.7.181.103:3000/");
     //   console.log('paymentsatus if ', paymentsatus);
   }, 5000);
   // } else {

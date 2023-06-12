@@ -20,7 +20,7 @@ const Payment = () => {
   // const article = { title: "React POST Request Example" };
   useEffect(() => {
     axios
-      .post("http://localhost:8080/getuserreciept", { email: useremail })
+      .post("http://103.7.181.103:8000/api/getuserreciept", { email: useremail })
       .then((response) => {
         console.log("response ", response.data);
         setconpanyname(response.data.result[0].name);

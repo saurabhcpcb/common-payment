@@ -1,6 +1,6 @@
 module.exports = {
-  HOST: "localhost",
+  HOST: "103.7.181.102",
   USER: "root",
-  PASSWORD: "",
-  DB: "battry_database"
+  PASSWORD: "Cpcb@321",
+  DB: "common_payment"
 };
